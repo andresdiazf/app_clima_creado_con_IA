@@ -26,6 +26,16 @@ export function saveCity(city) {
   localStorage.setItem(KEY, JSON.stringify(cities.slice(0, MAX_ITEMS)));
 }
 
+
+/**
+ * Elimina una ciudad específica del historial
+ * @param {string} city
+ */
+export function deleteCity(city) {
+  const cities = getRecentCities().filter(c => c.toLowerCase() !== city.toLowerCase());
+  localStorage.setItem(KEY, JSON.stringify(cities));
+}
+
 /**
  * Elimina todas las ciudades guardadas
  */

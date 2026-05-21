@@ -3,7 +3,7 @@
 
 import { formatTemp, formatWind, formatPrecipitation, formatCoords, describeWeatherCode } from '../utils/format.js';
 import { getWeatherIcon } from './icons.js';
-import { getRecentCities } from '../utils/storage.js';
+import { getRecentCities, deleteCity } from '../utils/storage.js';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -84,10 +84,26 @@ export function renderRecentCities(onSelect) {
   if (!cities.length) return;
 
   cities.forEach(city => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'recent-chip-wrapper';
+
     const btn = document.createElement('button');
     btn.className   = 'recent-chip';
     btn.textContent = city;
     btn.addEventListener('click', () => onSelect(city));
-    container.appendChild(btn);
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'delete-chip-btn';
+    delBtn.title = 'Eliminar ciudad';
+    delBtn.innerHTML = '✕';
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteCity(city);
+      renderRecentCities(onSelect);
+    });
+
+    wrapper.appendChild(btn);
+    wrapper.appendChild(delBtn);
+    container.appendChild(wrapper);
   });
 }
