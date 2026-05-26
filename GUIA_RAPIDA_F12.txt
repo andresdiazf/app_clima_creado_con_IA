@@ -1,0 +1,260 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  GUÍA RÁPIDA: PROBAR CACHÉ CON F12                           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+🎯 OBJETIVO: Verificar que el sistema de caché funciona correctamente
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 1: ABRIR DEVTOOLS (F12)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Abre index.html en el navegador
+2. Presiona F12 (o Click derecho → Inspeccionar)
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  Weather App                                    [_ □ X]      │
+   ├─────────────────────────────────────────────────────────────┤
+   │  [Bogotá                    ] [🔍]                          │
+   │                                                             │
+   │  Bogotá, Colombia                                           │
+   │  🌤️ 18°C - Parcialmente nublado                            │
+   ├─────────────────────────────────────────────────────────────┤
+   │  DevTools (F12)                                             │
+   │  ┌─────────────────────────────────────────────────────┐   │
+   │  │ Elements Console Sources Network Application ▼      │   │
+   │  │                                                      │   │
+   │  │ > ✅ Aplicación con caché inicializada              │   │
+   │  │ > 💡 Tip: Los datos se guardan por 10 minutos       │   │
+   │  │                                                      │   │
+   │  └─────────────────────────────────────────────────────┘   │
+   └─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 2: PROBAR CACHÉ BÁSICO
+═══════════════════════════════════════════════════════════════════════════════
+
+A. PRIMERA BÚSQUEDA (Sin caché)
+   1. Escribe "Bogotá"
+   2. Presiona Enter
+   3. Resultado: Datos se cargan (tarda ~1 segundo)
+
+B. SEGUNDA BÚSQUEDA (Con caché)
+   1. Borra el campo
+   2. Escribe "Bogotá" de nuevo
+   3. Presiona Enter
+   4. Resultado: ⚡ INSTANTÁNEO + mensaje "📦 Datos del caché"
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  📦 Datos del caché                    ← APARECE ESTO       │
+   │  [Bogotá                    ] [🔍]                          │
+   │                                                             │
+   │  Bogotá, Colombia                                           │
+   │  🌤️ 18°C - Parcialmente nublado                            │
+   └─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 3: VERIFICAR EN NETWORK (Red)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. En DevTools, click en pestaña "Network"
+2. Click en el botón 🚫 (Clear) para limpiar
+3. Busca "Bogotá" de nuevo
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  Network                                                    │
+   │  🔴 ⚫ 🚫  [ ] Offline  [No throttling ▼]                   │
+   │  ┌───────────────────────────────────────────────────────┐ │
+   │  │ Name          Status  Type      Size      Time        │ │
+   │  ├───────────────────────────────────────────────────────┤ │
+   │  │ app.cached.js  200    script    15.2 KB   45 ms      │ │
+   │  │ cache.js       200    script    12.8 KB   32 ms      │ │
+   │  │                                                       │ │
+   │  │ ✅ NO HAY PETICIONES A api.open-meteo.com            │ │
+   │  │ ✅ Esto confirma que usa el caché                    │ │
+   │  └───────────────────────────────────────────────────────┘ │
+   └─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 4: PROBAR MODO OFFLINE
+═══════════════════════════════════════════════════════════════════════════════
+
+A. ACTIVAR MODO OFFLINE
+   1. En DevTools → Network
+   2. ✅ Marca el checkbox "Offline"
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  Network                                                    │
+   │  🔴 ⚫ 🚫  [✓] Offline  [No throttling ▼]  ← MARCAR AQUÍ   │
+   │  ┌───────────────────────────────────────────────────────┐ │
+   │  │                                                       │ │
+   │  └───────────────────────────────────────────────────────┘ │
+   └─────────────────────────────────────────────────────────────┘
+
+B. VERIFICAR INDICADOR
+   En la esquina superior derecha debe aparecer:
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  Weather App                        🔴 Sin conexión         │
+   │                                     ↑ APARECE ESTO          │
+   └─────────────────────────────────────────────────────────────┘
+
+C. BUSCAR CON MODO OFFLINE
+   1. Busca "Bogotá" (debe estar en caché)
+   2. Resultado: Datos se muestran + mensaje de advertencia
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  ⚠️ Sin conexión - Mostrando datos guardados                │
+   │  [Bogotá                    ] [🔍]                          │
+   │                                                             │
+   │  Bogotá, Colombia                                           │
+   │  🌤️ 18°C - Parcialmente nublado                            │
+   └─────────────────────────────────────────────────────────────┘
+
+D. INTENTAR CIUDAD NUEVA (Sin caché)
+   1. Busca "París" (NO está en caché)
+   2. Resultado: ❌ Error (correcto, no hay datos)
+
+E. DESACTIVAR MODO OFFLINE
+   1. ❌ Desmarca el checkbox "Offline"
+   2. Debe aparecer: "🟢 Conectado" (se oculta en 2 segundos)
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 5: VER DATOS EN LOCALSTORAGE
+═══════════════════════════════════════════════════════════════════════════════
+
+1. En DevTools, click en pestaña "Application"
+2. Panel izquierdo → Local Storage
+3. Click en tu dominio (file:// o localhost)
+4. Busca claves que empiecen con "weather_cache_"
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │  Application                                                │
+   │  ┌──────────────────┬──────────────────────────────────────┐│
+   │  │ ▼ Local Storage  │ Key                    Value         ││
+   │  │   ▶ file://      │ weather_cache_city_... {"data":{...} ││
+   │  │                  │ weather_cache_city_... {"data":{...} ││
+   │  │ ▼ Session Stor.. │ weather_recent_cities  ["Bogotá"...] ││
+   │  │ ▼ IndexedDB      │                                      ││
+   │  └──────────────────┴──────────────────────────────────────┘│
+   └─────────────────────────────────────────────────────────────┘
+
+5. Click en una clave para ver el contenido JSON:
+   {
+     "data": { temperature: 18, city: "Bogotá", ... },
+     "timestamp": 1716672000000,
+     "ttl": 600000,
+     "key": "weather_cache_city_bogota"
+   }
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 6: COMANDOS ÚTILES EN CONSOLA
+═══════════════════════════════════════════════════════════════════════════════
+
+A. VER ESTADÍSTICAS DEL CACHÉ
+   En Console, pega este código:
+
+   import { getCacheStats } from './src/utils/cache.js';
+   const stats = getCacheStats();
+   console.log('Total:', stats.total);
+   console.log('Válidas:', stats.valid);
+   console.log('Expiradas:', stats.expired);
+   console.table(stats.entries);
+
+B. VER EDAD DEL CACHÉ
+   const item = localStorage.getItem('weather_cache_city_bogota');
+   const entry = JSON.parse(item);
+   const age = (Date.now() - entry.timestamp) / 1000;
+   console.log(`Edad: ${Math.floor(age)} segundos`);
+
+C. LIMPIAR TODO EL CACHÉ
+   import { clearAllCache } from './src/utils/cache.js';
+   clearAllCache();
+   console.log('✅ Caché limpiado');
+
+D. VER TODAS LAS CLAVES DE CACHÉ
+   Object.keys(localStorage)
+     .filter(k => k.startsWith('weather_cache_'))
+     .forEach(k => console.log(k));
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ CHECKLIST DE VERIFICACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+CACHÉ BÁSICO:
+[ ] Primera búsqueda carga datos (sin caché)
+[ ] Segunda búsqueda es instantánea
+[ ] Aparece "📦 Datos del caché"
+[ ] No hay peticiones HTTP en Network
+
+MODO OFFLINE:
+[ ] Checkbox "Offline" activa el modo
+[ ] Aparece "🔴 Sin conexión"
+[ ] Datos en caché se muestran
+[ ] Aparece "⚠️ Sin conexión - Mostrando datos guardados"
+[ ] Ciudad sin caché muestra error
+[ ] Al desactivar: "🟢 Conectado"
+
+LOCALSTORAGE:
+[ ] Datos en Application → Local Storage
+[ ] Claves con "weather_cache_"
+[ ] Cada entrada tiene timestamp y ttl
+
+═══════════════════════════════════════════════════════════════════════════════
+🐛 PROBLEMAS COMUNES
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEMA: No aparece "📦 Datos del caché"
+SOLUCIÓN: Verifica que index.html use src/app.cached.js
+
+PROBLEMA: Modo offline no funciona
+SOLUCIÓN: Marca el checkbox "Offline" en Network
+
+PROBLEMA: No veo datos en localStorage
+SOLUCIÓN: Ve a Application (no Console) → Local Storage
+
+PROBLEMA: El caché no expira
+SOLUCIÓN: Espera 10 minutos o cambia DEFAULT_TTL a 10 segundos
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 RESULTADOS ESPERADOS
+═══════════════════════════════════════════════════════════════════════════════
+
+PRIMERA BÚSQUEDA:
+- Tiempo: ~1 segundo
+- Mensaje: Ninguno
+- Network: Petición a api.open-meteo.com
+
+SEGUNDA BÚSQUEDA (CACHÉ):
+- Tiempo: Instantáneo (<100ms)
+- Mensaje: "📦 Datos del caché"
+- Network: Sin peticiones a la API
+
+MODO OFFLINE:
+- Indicador: "🔴 Sin conexión"
+- Mensaje: "⚠️ Sin conexión - Mostrando datos guardados"
+- Funcionalidad: Datos se muestran correctamente
+
+═══════════════════════════════════════════════════════════════════════════════
+🎓 ATAJOS DE TECLADO ÚTILES
+═══════════════════════════════════════════════════════════════════════════════
+
+F12                 - Abrir/Cerrar DevTools
+Ctrl + Shift + I    - Abrir DevTools
+Ctrl + Shift + J    - Abrir Console directamente
+Ctrl + L            - Limpiar Console
+F5                  - Recargar página
+Ctrl + Shift + R    - Recargar sin caché del navegador
+Ctrl + Shift + Del  - Limpiar datos del navegador
+
+═══════════════════════════════════════════════════════════════════════════════
+📚 DOCUMENTACIÓN COMPLETA
+═══════════════════════════════════════════════════════════════════════════════
+
+Para más detalles, lee:
+- GUIA_PRUEBAS_NAVEGADOR.md    - Guía detallada con capturas
+- GUIA_IMPLEMENTACION_CACHE.md - Guía de implementación completa
+- RESUMEN_CACHE.txt             - Resumen del sistema de caché
+
+═══════════════════════════════════════════════════════════════════════════════
+                            ¡FELIZ TESTING! 🧪✨
+═══════════════════════════════════════════════════════════════════════════════

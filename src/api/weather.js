@@ -37,6 +37,51 @@ export async function fetchWeather(lat, lon) {
 }
 
 /**
+ * Obtiene el pronóstico del clima para los próximos días
+ * @param {number} lat - Latitud
+ * @param {number} lon - Longitud
+ * @param {number} days - Número de días (default: 7)
+ * @returns {Promise<Array>} Array con pronóstico diario
+ */
+export async function fetchWeatherForecast(lat, lon, days = 7) {
+  const params = new URLSearchParams({
+    latitude:          lat,
+    longitude:         lon,
+    daily:             [
+      'weathercode',
+      'temperature_2m_max',
+      'temperature_2m_min',
+      'precipitation_probability_max',
+      'windspeed_10m_max',
+    ].join(','),
+    windspeed_unit:    'kmh',
+    timezone:          'auto',
+    forecast_days:     days,
+  });
+
+  const res = await fetch(`${WX_URL}?${params}`);
+
+  if (!res.ok) throw new Error('Error al obtener el pronóstico del clima.');
+
+  const data = await res.json();
+  
+  // Transformar los datos en un array de objetos más fácil de usar
+  const forecast = [];
+  for (let i = 0; i < data.daily.time.length; i++) {
+    forecast.push({
+      date: data.daily.time[i],
+      weathercode: data.daily.weathercode[i],
+      tempMax: data.daily.temperature_2m_max[i],
+      tempMin: data.daily.temperature_2m_min[i],
+      precipitationProbability: data.daily.precipitation_probability_max[i],
+      windSpeed: data.daily.windspeed_10m_max[i],
+    });
+  }
+  
+  return forecast;
+}
+
+/**
  * Obtiene información meteorológica resumida para una ciudad
  * @param {string} cityName
  * @returns {Promise<{ city: string, temperature: number, description: string }>}

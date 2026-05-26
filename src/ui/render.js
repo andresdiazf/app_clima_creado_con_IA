@@ -18,7 +18,10 @@ const $ = id => document.getElementById(id);
 export function setLoading(on) {
   $('loader').classList.toggle('active', on);
   $('search-btn').disabled = on;
-  if (on) hideCard();
+  if (on) {
+    hideCard();
+    hideForecast();
+  }
 }
 
 // ─── Error ───────────────────────────────────────────────────────────────────
@@ -39,6 +42,14 @@ function hideCard() {
   const card = $('weather-card');
   card.classList.remove('visible');
   card.style.display = 'none';
+}
+
+function hideForecast() {
+  const section = $('forecast-section');
+  const container = $('forecast-container');
+  section.classList.remove('visible');
+  container.classList.remove('visible');
+  container.style.display = 'none';
 }
 
 /**
@@ -107,3 +118,88 @@ export function renderRecentCities(onSelect) {
     container.appendChild(wrapper);
   });
 }
+
+// ─── Pronóstico de 7 días ────────────────────────────────────────────────────
+
+/**
+ * Renderiza el pronóstico de 7 días
+ * @param {Array} forecast - Array con datos diarios del pronóstico
+ */
+export function renderForecast(forecast) {
+  const section = $('forecast-section');
+  const container = $('forecast-container');
+  
+  if (!forecast || forecast.length === 0) {
+    section.style.display = 'none';
+    container.style.display = 'none';
+    return;
+  }
+
+  container.innerHTML = '';
+
+  forecast.forEach((day, index) => {
+    const dayCard = document.createElement('div');
+    dayCard.className = 'forecast-day';
+
+    // Nombre del día
+    const dayName = document.createElement('div');
+    dayName.className = 'forecast-day-name';
+    dayName.textContent = formatDayName(day.date, index);
+
+    // Ícono del clima
+    const icon = document.createElement('div');
+    icon.className = 'forecast-icon';
+    icon.textContent = getWeatherIcon(day.weathercode);
+
+    // Temperaturas
+    const temps = document.createElement('div');
+    temps.className = 'forecast-temps';
+    
+    const tempMax = document.createElement('span');
+    tempMax.className = 'forecast-temp-max';
+    tempMax.textContent = `${Math.round(day.tempMax)}°`;
+    
+    const tempMin = document.createElement('span');
+    tempMin.className = 'forecast-temp-min';
+    tempMin.textContent = `${Math.round(day.tempMin)}°`;
+    
+    temps.appendChild(tempMax);
+    temps.appendChild(tempMin);
+
+    // Probabilidad de precipitación
+    const precip = document.createElement('div');
+    precip.className = 'forecast-precip';
+    precip.innerHTML = `💧 ${day.precipitationProbability || 0}%`;
+
+    // Ensamblar tarjeta
+    dayCard.appendChild(dayName);
+    dayCard.appendChild(icon);
+    dayCard.appendChild(temps);
+    dayCard.appendChild(precip);
+
+    container.appendChild(dayCard);
+  });
+
+  // Mostrar sección y contenedor con animación
+  section.style.display = 'block';
+  container.style.display = 'grid';
+  section.getBoundingClientRect(); // forzar reflow
+  section.classList.add('visible');
+  container.classList.add('visible');
+}
+
+/**
+ * Formatea la fecha para mostrar el nombre del día
+ * @param {string} dateStr - Fecha en formato ISO (YYYY-MM-DD)
+ * @param {number} index - Índice del día (0 = hoy)
+ * @returns {string} Nombre del día
+ */
+function formatDayName(dateStr, index) {
+  if (index === 0) return 'Hoy';
+  if (index === 1) return 'Mañana';
+  
+  const date = new Date(dateStr + 'T00:00:00');
+  const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  return days[date.getDay()];
+}
+

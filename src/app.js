@@ -2,13 +2,14 @@
 // Punto de entrada: orquesta el flujo completo
 
 import { geocodeCity }   from './api/geocoding.js';
-import { fetchWeather }  from './api/weather.js';
+import { fetchWeather, fetchWeatherForecast }  from './api/weather.js';
 import { saveCity }      from './utils/storage.js';
 import {
   setLoading,
   showError,
   hideError,
   renderWeather,
+  renderForecast,
   renderRecentCities,
 } from './ui/render.js';
 
@@ -29,12 +30,16 @@ async function searchWeather(city) {
     // 1. Ciudad → coordenadas
     const location = await geocodeCity(city);
 
-    // 2. Coordenadas → datos del clima
+    // 2. Coordenadas → datos del clima actual
     const wx = await fetchWeather(location.latitude, location.longitude);
 
-    // 3. Guardar en historial y pintar resultado
+    // 3. Coordenadas → pronóstico de 7 días
+    const forecast = await fetchWeatherForecast(location.latitude, location.longitude, 7);
+
+    // 4. Guardar en historial y pintar resultados
     saveCity(location.name);
     renderWeather(location, wx);
+    renderForecast(forecast);
     renderRecentCities(selectRecentCity);
 
   } catch (err) {

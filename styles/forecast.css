@@ -1,0 +1,140 @@
+/* styles/forecast.css */
+/* Estilos para el pronóstico de 7 días */
+
+/* ── Sección de pronóstico ── */
+
+.forecast-section {
+  margin-top: 2rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.forecast-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.forecast-title {
+  font-family: 'Comic Sans MS', 'Comic Sans', 'Arial Rounded MT Bold', cursive, sans-serif;
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 #FFD166;
+}
+
+/* ── Contenedor de tarjetas ── */
+
+.forecast-container {
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.forecast-container.visible {
+  display: grid;
+}
+
+/* ── Tarjeta de día ── */
+
+.forecast-day {
+  background: var(--card-bg);
+  border: 3px solid var(--border);
+  border-radius: 20px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px 0 #FFD16622;
+}
+
+.forecast-day:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px 0 #FFD16644;
+}
+
+/* ── Nombre del día ── */
+
+.forecast-day-name {
+  font-family: 'Comic Sans MS', 'Comic Sans', 'Arial Rounded MT Bold', cursive, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--ink-2);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Ícono del clima ── */
+
+.forecast-icon {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+}
+
+/* ── Temperaturas ── */
+
+.forecast-temps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+  font-family: 'Comic Sans MS', 'Comic Sans', 'Arial Rounded MT Bold', cursive, sans-serif;
+}
+
+.forecast-temp-max {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.forecast-temp-min {
+  font-size: 1.2rem;
+  color: var(--ink-3);
+}
+
+/* ── Precipitación ── */
+
+.forecast-precip {
+  font-size: 0.9rem;
+  color: var(--ink-3);
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .forecast-container {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .forecast-day {
+    padding: 1rem 0.8rem;
+  }
+
+  .forecast-icon {
+    font-size: 2.5rem;
+  }
+
+  .forecast-temp-max {
+    font-size: 1.3rem;
+  }
+
+  .forecast-temp-min {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .forecast-title {
+    font-size: 1.5rem;
+  }
+
+  .forecast-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

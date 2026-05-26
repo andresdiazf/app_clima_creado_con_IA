@@ -106,24 +106,37 @@ Este proyecto incluye documentación educativa extensa:
 ```
 Ciudad: Bogotá, Colombia
 Coordenadas: 4.610° N, 74.082° O
+
+CLIMA ACTUAL:
 Temperatura: 18°C
 Sensación térmica: 17°C
 Humedad: 75%
 Viento: 12 km/h
 Precipitación: 0 mm
 Descripción: Parcialmente nublado
+
+PRONÓSTICO DE 7 DÍAS:
+Hoy:     ☀️  25° / 15°  💧 10%
+Mañana:  ⛅  26° / 16°  💧 20%
+Mié:     🌧️  22° / 14°  💧 80%
+Jue:     ⛅  24° / 15°  💧 30%
+Vie:     ☀️  27° / 17°  💧 5%
+Sáb:     ☀️  28° / 18°  💧 10%
+Dom:     ⛅  25° / 16°  💧 25%
 ```
 
 ### Salida de Tests
 ```
 PASS  src/utils/__tests__/format.test.js
 PASS  src/utils/__tests__/storage.test.js
+PASS  src/utils/__tests__/cache.test.js
 PASS  src/api/__tests__/api-errors.test.js
+PASS  src/api/__tests__/forecast.test.js
 
-Test Suites: 3 passed, 3 total
-Tests:       28 passed, 28 total
+Test Suites: 5 passed, 5 total
+Tests:       68 passed, 68 total
 Snapshots:   0 total
-Time:        2.5s
+Time:        1.5s
 ```
 
 ---
@@ -133,6 +146,7 @@ Time:        2.5s
 ### Funcionalidades Principales
 - ✅ **Búsqueda de ciudades**: Encuentra cualquier ciudad del mundo
 - ✅ **Datos en tiempo real**: Información meteorológica actualizada
+- ✅ **Pronóstico de 7 días**: Predicción del clima para la próxima semana con temperaturas máx/mín y probabilidad de precipitación
 - ✅ **Geocodificación**: Convierte nombres de ciudades a coordenadas
 - ✅ **Historial local**: Guarda las últimas 5 búsquedas en localStorage
 - ✅ **Interfaz responsive**: Funciona en móviles, tablets y escritorio
@@ -334,45 +348,41 @@ weather-app/
 
 ### Funcionalidades Planeadas
 
-1. **📅 Pronóstico de 7 días**
-   - Mostrar predicción del clima para la próxima semana
-   - Gráficos de temperatura y precipitación
-
-2. **🌍 Geolocalización**
+1. **🌍 Geolocalización**
    - Detectar ubicación del usuario automáticamente
    - Botón "Usar mi ubicación"
 
-3. **🎨 Temas personalizables**
+2. **🎨 Temas personalizables**
    - Modo oscuro / claro
    - Temas de color personalizados
 
-4. **📊 Gráficos interactivos**
+3. **📊 Gráficos interactivos**
    - Visualización de datos con Chart.js
    - Historial de temperatura
 
-5. **🔔 Alertas meteorológicas**
+4. **🔔 Alertas meteorológicas**
    - Notificaciones de clima extremo
    - Alertas personalizadas
 
-6. **🌐 Internacionalización**
+5. **🌐 Internacionalización**
    - Soporte para múltiples idiomas
    - Unidades imperiales (Fahrenheit, mph)
 
-7. **💾 Favoritos**
+6. **💾 Favoritos**
    - Guardar ciudades favoritas
    - Comparar clima entre ciudades
 
-8. **📱 Progressive Web App (PWA)**
+7. **📱 Progressive Web App (PWA)**
    - Funcionar offline
    - Instalable en dispositivos móviles
 
-9. **🧪 Tests E2E**
+8. **🧪 Tests E2E**
    - Tests de interfaz con Playwright o Cypress
    - Tests de integración completos
 
-10. **♿ Mejoras de accesibilidad**
-    - Navegación por teclado completa
-    - Soporte para lectores de pantalla
+9. **♿ Mejoras de accesibilidad**
+   - Navegación por teclado completa
+   - Soporte para lectores de pantalla
 
 ---
 

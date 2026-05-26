@@ -1,0 +1,176 @@
+/* styles/cache-indicators.css */
+/* Estilos para indicadores de caché y conexión */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ADVERTENCIA DE CACHÉ
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.cache-warning {
+  display: none;
+  padding: 12px 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+.cache-warning.offline {
+  background-color: #fff3cd;
+  border: 2px solid #ffc107;
+  color: #856404;
+}
+
+.cache-warning.expired {
+  background-color: #d1ecf1;
+  border: 2px solid #17a2b8;
+  color: #0c5460;
+}
+
+.cache-warning:not(.offline):not(.expired) {
+  background-color: #d4edda;
+  border: 2px solid #28a745;
+  color: #155724;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ESTADO DE CONEXIÓN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.connection-status {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.connection-status.online {
+  background-color: #28a745;
+  color: white;
+}
+
+.connection-status.offline {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTÓN DE REFRESH
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.refresh-btn {
+  background: none;
+  border: 2px solid #6c757d;
+  color: #6c757d;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 10px;
+}
+
+.refresh-btn:hover {
+  background-color: #6c757d;
+  color: white;
+  transform: rotate(180deg);
+}
+
+.refresh-btn:active {
+  transform: scale(0.95) rotate(180deg);
+}
+
+.refresh-btn svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INDICADOR DE DATOS ANTIGUOS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.data-age {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.data-age.stale {
+  color: #ffc107;
+}
+
+.data-age.very-stale {
+  color: #dc3545;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMACIONES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .connection-status {
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .cache-warning {
+    font-size: 13px;
+    padding: 10px 16px;
+    margin: 15px 0;
+  }
+  
+  .refresh-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
