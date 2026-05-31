@@ -479,9 +479,9 @@ afterEach(() => {
 ---
 
 ## 👨‍💻 Autor
-
-**Estudiante de Desarrollo Full Stack**  
-Generation Colombia - Programa de IA
+Andrés Oswaldo Díaz Figueroa - Estudiante de Desarrollo Full Stack  
+Generation Colombia - Programa de JAVA 11
+Generation Colombia 2026
 
 ---
 
@@ -496,14 +496,6 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 - **Open-Meteo**: Por proporcionar una API gratuita y confiable
 - **Generation Colombia**: Por la formación en desarrollo web
 - **Jest**: Por hacer el testing accesible y poderoso
-
----
-
-## 📞 Contacto y Soporte
-
-Si tienes preguntas o sugerencias:
-- 📧 Email: [tu-email@ejemplo.com]
-- 💬 GitHub Issues: [link-al-repositorio]
 
 ---
 
