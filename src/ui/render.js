@@ -106,7 +106,7 @@ export function renderRecentCities(onSelect) {
     const delBtn = document.createElement('button');
     delBtn.className = 'delete-chip-btn';
     delBtn.title = 'Eliminar ciudad';
-    delBtn.innerHTML = '✕';
+    delBtn.textContent = '✕';
     delBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       deleteCity(city);
@@ -169,7 +169,7 @@ export function renderForecast(forecast) {
     // Probabilidad de precipitación
     const precip = document.createElement('div');
     precip.className = 'forecast-precip';
-    precip.innerHTML = `💧 ${day.precipitationProbability || 0}%`;
+    precip.textContent = `💧 ${day.precipitationProbability || 0}%`;
 
     // Ensamblar tarjeta
     dayCard.appendChild(dayName);

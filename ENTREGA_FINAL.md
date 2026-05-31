@@ -464,11 +464,11 @@ Estoy orgulloso del trabajo realizado y listo para aplicar estas habilidades en 
 
 ---
 
-**Fecha de Entrega:** Mayo 22, 2026  
+**Fecha de Entrega:** 31 de Junio 2026  
 **Versión:** 1.0  
 **Estado:** ✅ Completo y Listo para Revisión
 
 ---
 
-**Firma Digital:** [Tu Nombre]  
+**Estudiante:** Andres Oswaldo Diaz Figueroa
 **Generation Colombia - Desarrollo Full Stack**

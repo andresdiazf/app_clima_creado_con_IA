@@ -11,5 +11,9 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0"
+  },
+  "dependencies": {
+    "docx": "^9.7.1",
+    "image-to-base64": "^2.2.0"
   }
 }

@@ -2,14 +2,25 @@
 // Convierte el nombre de una ciudad en coordenadas lat/lon
 // usando la API gratuita de Open-Meteo (sin API key)
 
-const GEO_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+// ✅ BUENA PRÁCTICA: Importar URLs desde config central
+// En lugar de escribir la URL aquí directamente, la traemos
+// del archivo de configuración. Si cambia la URL, solo
+// la actualizamos en config.js y todo el código se actualiza.
+import { GEOCODING_API_URL } from '../config.js';
 
 /**
- * @param {string} city - Nombre de la ciudad
- * @returns {{ name, country, latitude, longitude }}
+ * Convierte el nombre de una ciudad a coordenadas geográficas
+ * 
+ * @param {string} city - Nombre de la ciudad a buscar
+ * @returns {Promise<{ name: string, country: string, latitude: number, longitude: number }>}
+ * @throws {Error} Si la ciudad no se encuentra o hay error de red
+ * 
+ * @example
+ * const location = await geocodeCity('Bogotá');
+ * // { name: 'Bogotá', country: 'CO', latitude: 4.61, longitude: -74.08 }
  */
 export async function geocodeCity(city) {
-  const url = `${GEO_URL}?name=${encodeURIComponent(city)}&count=1&language=es`;
+  const url = `${GEOCODING_API_URL}?name=${encodeURIComponent(city)}&count=1&language=es`;
   const res  = await fetch(url);
 
   if (!res.ok) throw new Error('Error al conectar con el servicio de geocodificación.');
